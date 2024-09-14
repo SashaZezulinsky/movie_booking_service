@@ -1,0 +1,75 @@
+# Doxyfile 1.9.2
+
+# Project settings
+PROJECT_NAME           = "Movie Booking Service"
+PROJECT_NUMBER         = "1.0"
+PROJECT_BRIEF          = "This project is a movie booking service backend implemented in C++."
+OUTPUT_LANGUAGE        = English
+
+# Input/output directories
+INPUT                  = src
+OUTPUT_DIRECTORY       = docs
+
+# Output formats
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# Files and directories to exclude from documentation
+EXCLUDE                = 
+
+# Enable source browser
+SOURCE_BROWSER         = YES
+
+# Exclude internal functions and classes (those with the @internal tag)
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = YES
+
+# Enable call graphs and caller graphs
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+# Diagrams support
+HAVE_DOT               = YES
+DOT_PATH               = /usr/bin/dot
+DOT_IMAGE_FORMAT       = png
+GENERATE_TREEVIEW      = YES
+DOT_CLEANUP            = YES
+
+# Documentation for files
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = YES
+SHOW_INCLUDE_FILES     = YES
+
+# Maximum depth of the class hierarchy and call graphs
+MAX_DOT_GRAPH_DEPTH    = 2
+
+# Optimization settings
+INLINE_INFO            = YES
+ALWAYS_DETAILED_SEC    = YES
+
+# Sort member functions and class members
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+SORT_GROUP_NAMES       = YES
+
+# LaTeX settings (only if GENERATE_LATEX is enabled)
+PAPER_TYPE             = a4
+
+# Other settings
+STRIP_CODE_COMMENTS    = YES
+GENERATE_DEPRECATEDLIST = YES
+GENERATE_TODOLIST      = YES
+GENERATE_TESTLIST      = YES
+
+# Enable warnings and diagnostics
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+
+# Enable multithreading
+MULTILINE_CPP_IS_BRIEF = YES
+MULTITHREADED          = YES
