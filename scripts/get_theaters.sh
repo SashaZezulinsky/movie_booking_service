@@ -33,11 +33,11 @@ for movie in "${movies[@]}"; do
     json_payload=$(jq -n --arg movieName "$movie" '{"movieName": $movieName}')
 
     # Send the POST request to get theaters for the movie
-    echo "Getting theaters for movie: $movie"
     response=$(curl -s -X POST "$BASE_URL/movies/theaters" \
         -H "Content-Type: application/json" \
         -d "$json_payload")
 
     # Print the formatted response
-    echo "Response for '$movie': $response"
+    echo "$movie"
+    echo "$response" | jq '.'
 done

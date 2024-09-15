@@ -1,44 +1,37 @@
 #!/bin/bash
 
-# Base URL for the movie booking service
-BASE_URL="http://localhost:8080"
-
-# Movies and their corresponding theaters
-declare -A movie_theaters=(
-    ["The Silence of the Lambs"]="Cineplex, Regal Cinemas, AMC Theatres"
-    ["Se7en"]="Cinemark, Landmark Theatres, Alamo Drafthouse"
-    ["Seven Samurai"]="ArcLight, Landmark Theatres, AMC Theatres"
-    ["One Flew Over the Cuckoo's Nest"]="Regal Cinemas, Cineworld, Cineplex"
-    ["The Matrix"]="Cinemark, AMC Theatres, Alamo Drafthouse"
-    ["The Shawshank Redemption"]="Regal Cinemas, Landmark Theatres, AMC Theatres"
-    ["12 Angry Men"]="Cineplex, Cineworld, Regal Cinemas"
-    ["The Godfather: Part II"]="AMC Theatres, Alamo Drafthouse, Landmark Theatres"
-    ["Goodfellas"]="Cinemark, Cineworld, Regal Cinemas"
-    ["Forrest Gump"]="Regal Cinemas, AMC Theatres, Cineworld"
-    ["Star Wars: Episode V - The Empire Strikes Back"]="Cineworld, AMC Theatres, Alamo Drafthouse"
-    ["The Dark Knight"]="Cinemark, Regal Cinemas, Landmark Theatres"
-    ["Schindler's List"]="AMC Theatres, Alamo Drafthouse, Cineplex"
-    ["The Lord of the Rings: The Fellowship of the Ring"]="Cineworld, Regal Cinemas, AMC Theatres"
-    ["The Lord of the Rings: The Return of the King"]="Regal Cinemas, Landmark Theatres, Alamo Drafthouse"
-    ["The Godfather"]="Cinemark, AMC Theatres, Cineplex"
-    ["Pulp Fiction"]="Cineworld, Alamo Drafthouse, Regal Cinemas"
-    ["Inception"]="AMC Theatres, Cineplex, Landmark Theatres"
-    ["The Good, the Bad and the Ugly"]="Regal Cinemas, Cineworld, Alamo Drafthouse"
-    ["Fight Club"]="Cinemark, AMC Theatres, Landmark Theatres"
+# List of movies and associated theaters
+declare -A movies_and_theaters
+movies_and_theaters=(
+  ["The Silence of the Lambs"]='["The Grand Theater", "Cinema Paradiso", "The Regal"]'
+  ["Se7en"]='["The Fox Theater", "Cineplex", "The Landmark"]'
+  ["Seven Samurai"]='["The Village East", "The Alamo Drafthouse"]'
+  ["One Flew Over the Cuckoo's Nest"]='["The State Theatre", "The Old Town"]'
+  ["The Matrix"]='["IMAX Theater", "The Dolby"]'
+  ["The Shawshank Redemption"]='["The Modern Art", "The Bijou"]'
+  ["12 Angry Men"]='["The People Cinema", "The Old School"]'
+  ["The Godfather: Part II"]='["The Ambassador", "The Picture House"]'
+  ["Goodfellas"]='["The Silver Screen", "The Dream Theater"]'
+  ["Forrest Gump"]='["The Main Street Cinema", "The Loft"]'
+  ["Star Wars: Episode V - The Empire Strikes Back"]='["The Galaxy Theater", "Starlight Cinema"]'
+  ["The Dark Knight"]='["The Batcave Cinema", "The Cinematic Experience"]'
+  ["Schindler List"]='["The Art House", "The History Theater"]'
+  ["The Lord of the Rings: The Fellowship of the Ring"]='["The Middle-Earth Cinema", "The Elven Theater"]'
+  ["The Lord of the Rings: The Return of the King"]='["The Hobbiton Theater", "The Shire Cinema"]'
+  ["The Godfather"]='["The Vito Corleone Theater", "The Family Cinema"]'
+  ["Pulp Fiction"]='["The Reservoir Dogs Theater", "The Fiction Lounge"]'
+  ["Inception"]='["The Dreamscape Theater", "The Mind Bender"]'
+  ["The Good, the Bad and the Ugly"]='["The Wild West Theater", "The Cowboy Cinema"]'
+  ["Fight Club"]='["The Underground Theater", "The Rebel Cinema"]'
 )
 
-# Iterate through the movies and their corresponding theaters
-for movie in "${!movie_theaters[@]}"; do
-    theaters="${movie_theaters[$movie]}"
-    
-    # Create a JSON payload for the theaters
-    json_theaters=$(echo "$theaters" | jq -R -s 'split(", ") | map({theaterName: .})')
-    
-    # Send the POST request to add theaters to the movie
-    echo "Adding theaters to movie: $movie"
-    response=$(curl -s -X POST "$BASE_URL/add_theaters_to_movie" \
-        -H "Content-Type: application/json" \
-        -d "{\"movieName\":\"$movie\", \"theaters\":$json_theaters}")
-    
-    echo "Response: $response"
+# Loop through each movie and send a request to add theaters
+for movie in "${!movies_and_theaters[@]}"; do
+  theaters="${movies_and_theaters[$movie]}"
+  response=$(curl -s -X POST http://localhost:8080/add_theaters_to_movie \
+    -H "Content-Type: application/json" \
+    -d "{\"movieName\": \"$movie\", \"theaters\": $theaters}")
+  echo "Adding theaters to movie: $movie"
+  echo "Response: $response"
 done
+
