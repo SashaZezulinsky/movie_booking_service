@@ -45,18 +45,7 @@ int main() {
         }
 
         system.addTheatersToMovie(movieName, theaters);
-
-        // Prepare the response
-        crow::json::wvalue response;
-        response["movieName"] = movieName; // Respond with the movie name
-        response["theaters"] = crow::json::wvalue::list(); // Create a JSON array for theaters
-
-        size_t index = 0; // Index for the JSON array
-        for (const auto& theater : theaters) {
-            response["theaters"][index++] = theater->getName(); // Use array indexing to add theater names
-        }
-
-        return crow::response(response); // Respond with the movie name and array of theaters
+        return crow::response(200, "Theaters added for a movie");
     });
 
     // View all playing movies
@@ -104,10 +93,36 @@ int main() {
 
         std::string movieName = body["movieName"].s();
         std::string theaterName = body["theaterName"].s();
-        // Placeholder for getting available seats logic
-        // This should ideally be implemented in the Theater class.
+
+        // Get the theaters for the specified movie
+        auto theaters = system.getTheatersForMovie(movieName);
+        std::shared_ptr<Theater> selectedTheater;
+
+        // Find the specified theater in the list
+        for (const auto& theater : theaters) {
+            if (theater->getName() == theaterName) {
+                selectedTheater = theater;
+                break;
+            }
+        }
+
+        // Check if the theater was found
+        if (!selectedTheater) {
+            return crow::response(404, "Theater not found for the specified movie");
+        }
+
+        // Retrieve available seats from the selected theater
+        std::vector<std::string> availableSeats = selectedTheater->getAvailableSeats();
+
         crow::json::wvalue response_json;
-        response_json["availableSeats"] = {}; // Replace with actual available seats
+        response_json["availableSeats"] = crow::json::wvalue::list(); // Create a JSON array for available seats
+
+        // Populate available seats into the JSON response
+        size_t index = 0; // Index for the JSON array
+        for (const auto& seat : availableSeats) {
+            crow::json::wvalue theater_info;
+            response_json[index++] = std::move(seat); // Add each available seat to the array
+        }
 
         return crow::response(response_json); // Respond with available seats
     });

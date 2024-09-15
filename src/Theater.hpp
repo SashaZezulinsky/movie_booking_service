@@ -1,31 +1,19 @@
-/**
- * @file Theater.hpp
- * @brief Defines the Theater class representing a theater in the booking system.
- */
-
-#ifndef THEATER_HPP
-#define THEATER_HPP
-
-#include <string>
 #include <vector>
+#include <string>
+#include <iostream>
 #include <mutex>
 
 /**
  * @class Theater
- * @brief Class representing a theater.
+ * @brief Represents a theater with a set of seats.
  */
 class Theater {
 public:
     /**
-     * @brief Default constructor.
-     */
-    Theater() = default;
-
-    /**
-     * @brief Constructor with theater name.
+     * @brief Constructor for Theater.
      * @param name The name of the theater.
      */
-    Theater(const std::string& name) : name_(name), seats_(20, true) {} // Assuming 20 seats available
+    Theater(const std::string& name) : name_(name), seats_(20, true) {} // Initialize with 20 available seats
 
     /**
      * @brief Get the name of the theater.
@@ -34,26 +22,41 @@ public:
     std::string getName() const { return name_; }
 
     /**
-     * @brief Book seats in the theater.
-     * @param seatIndices A vector of seat indices to book.
-     * @return True if booking is successful, false otherwise.
+     * @brief Book specified seats in the theater.
+     * @param seatsToBook A vector of seat identifiers to book.
      */
-    bool bookSeats(const std::vector<std::string>& seatIndices) {
+    bool bookSeats(const std::vector<std::string>& seatsToBook) {
         std::lock_guard<std::mutex> lock(seat_mutex_); // Lock the mutex for thread safety
-        for (const auto& seatIndex : seatIndices) {
-            unsigned int index = std::stoi(seatIndex); // Convert string index to unsigned int
-            if (index >= seats_.size() || !seats_[index]) {
-                return false; // Invalid index or seat already booked
+        for (const auto& seat : seatsToBook) {
+            int index = seat[1] - '1'; // Convert seat name (e.g., "a1") to index (0-19)
+            if (index >= 0 && index < seats_.size()) {
+                seats_[index] = false; // Mark seat as booked
+            } else {
+                return false;
             }
-            seats_[index] = false; // Mark seat as booked
         }
-        return true; // Booking successful
+        return true;
+    }
+
+    /**
+     * @brief Get a list of available seats in the theater.
+     * @return A vector of available seat identifiers.
+     */
+    std::vector<std::string> getAvailableSeats() const {
+        std::lock_guard<std::mutex> lock(seat_mutex_); // Lock the mutex for thread safety
+        std::vector<std::string> availableSeats;
+        for (size_t i = 0; i < seats_.size(); ++i) {
+            if (seats_[i]) {
+                // Create a seat identifier (e.g., "a1", "a2", etc.)
+                char row = 'a'; // Assume all seats are in row 'a'
+                availableSeats.push_back(std::string(1, row) + std::to_string(i + 1));
+            }
+        }
+        return availableSeats;
     }
 
 private:
-    std::string name_; ///< The name of the theater.
-    std::vector<bool> seats_; ///< Availability of seats (true if available).
-    mutable std::mutex seat_mutex_; ///< Mutex for synchronizing access to seats.
+    std::string name_;                ///< The name of the theater
+    std::vector<bool> seats_;         ///< Vector to represent seat availability
+    mutable std::mutex seat_mutex_;   ///< Mutex for thread safety on seat operations
 };
-
-#endif // THEATER_HPP
