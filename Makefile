@@ -1,9 +1,12 @@
 # Set the directory for Conan's installation files
 CONAN_INSTALL_DIR = conan_install
 
+# Doxygen settings
+DOXYGEN_CONFIG = Doxyfile
+
 # Include Conan's generated make dependencies
 ifeq (,$(wildcard $(CONAN_INSTALL_DIR)/conandeps.mk))
-$(shell conan install . --build=missing -of=$(CONAN_INSTALL_DIR))
+    $(shell conan install . --build=missing -of=$(CONAN_INSTALL_DIR))
 endif
 include $(CONAN_INSTALL_DIR)/conandeps.mk
 
@@ -45,6 +48,18 @@ $(TARGET): $(OBJS)
 
 # Clean up all generated files
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR) $(CONAN_INSTALL_DIR)
 
-.PHONY: all clean
+# Generate documentation with Doxygen
+docs:
+	doxygen $(DOXYGEN_CONFIG)
+
+# Build Docker image
+docker:
+	docker build -t movie_booking_service .
+
+# Run the service
+run:
+	./$(TARGET)
+
+.PHONY: all clean clean_conan docs docker run
