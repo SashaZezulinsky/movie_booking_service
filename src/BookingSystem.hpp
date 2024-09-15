@@ -77,8 +77,8 @@ public:
      * @return True if seats are successfully booked, false otherwise.
      */
     bool bookSeats(const std::string& movieName, const std::string& theaterName, const std::vector<std::string>& seatsToBook) {
-        std::lock_guard<std::mutex> lock(movies_mutex_); // Lock the mutex for thread safety
         auto theaters = getTheatersForMovie(movieName);
+        std::lock_guard<std::mutex> lock(movies_mutex_); // Lock the mutex for thread safety
         for (const auto& theater : theaters) {
             if (theater->getName() == theaterName) {
                 return theater->bookSeats(seatsToBook);

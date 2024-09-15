@@ -36,7 +36,7 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 # Target to build the entire project
-all: $(OBJ_DIR) $(BIN_DIR) $(TARGET)
+all: clean $(OBJ_DIR) $(BIN_DIR) $(TARGET)
 
 # Compile individual source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp

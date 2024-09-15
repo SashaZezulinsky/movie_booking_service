@@ -22,21 +22,49 @@ public:
     std::string getName() const { return name_; }
 
     /**
-     * @brief Book specified seats in the theater.
-     * @param seatsToBook A vector of seat identifiers to book.
+     * @brief Books one or more seats for the theater.
+     * 
+     * This function attempts to book the specified seats. It verifies that each seat 
+     * is in the correct format (e.g., "a1", "a2", ..., "a20") and checks that the 
+     * seat is available for booking. The function locks the seat mutex to ensure 
+     * thread safety during the booking process.
+     *
+     * @param seats A vector of strings representing the seat names to be booked.
+     *              Each seat name must be in the format of "aX", where X is a 
+     *              number from 1 to 20.
+     *
+     * @return true if all specified seats were successfully booked; false if any 
+     *         seat is invalid, already booked, or out of bounds.
      */
-    bool bookSeats(const std::vector<std::string>& seatsToBook) {
-        std::lock_guard<std::mutex> lock(seat_mutex_); // Lock the mutex for thread safety
-        for (const auto& seat : seatsToBook) {
-            int index = seat[1] - '1'; // Convert seat name (e.g., "a1") to index (0-19)
-            if (index >= 0 && index < seats_.size()) {
-                seats_[index] = false; // Mark seat as booked
-            } else {
-                return false;
+    bool bookSeats(const std::vector<std::string>& seats) {
+        std::lock_guard<std::mutex> lock(seat_mutex_); // Lock the mutex to prevent race conditions
+
+        for (const auto& seat : seats) {
+            // Ensure the seat name is in the correct format (e.g., "a1", "a2", ..., "a20")
+            if (seat.size() < 2 || seat[0] != 'a') {
+                return false; // Invalid seat name
             }
+
+            // Convert the remaining characters to a number
+            size_t seatIndex = std::stoi(seat.substr(1)); // Convert the substring starting from index 1
+
+            // Validate the seat index (1 to 20)
+            if (seatIndex < 1 || seatIndex > 20) {
+                return false; // Seat index is out of bounds
+            }
+
+            // Convert to zero-based index for booking
+            seatIndex -= 1;
+
+            // Check if the seat is already booked
+            if (!seats_[seatIndex]) {
+                return false; // Seat is already booked
+            }
+
+            seats_[seatIndex] = false; // Book the seat
         }
-        return true;
-    }
+        return true; // Successfully booked all seats
+}
 
     /**
      * @brief Get a list of available seats in the theater.
