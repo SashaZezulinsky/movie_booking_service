@@ -41,11 +41,13 @@ To install the project dependencies using Conan, follow these steps:
    ```
 
 ## Running the Service
-Once built, you can run the service using:
+
+### Running binary
 ```bash
 ./bin/movie_booking_service
 ```
-or
+
+### Running with Makefile
 ```
 make run
 ```
@@ -82,25 +84,77 @@ You can use these to interact with the movie booking service.
 Use the `add_movies.sh` script to add movies to the service.
 
 This script sends a POST request to the `/add_movie` endpoint to add multiple movies.
+
+Example:
    ```bash
     ./scripts/add_movies.sh
    ```
+
+Output:
+```bash
+Adding movie: The Godfather
+Response: {"movieName":"The Godfather"}
+------------------------------------
+Adding movie: Schindler's List
+Response: {"movieName":"Schindler's List"}
+------------------------------------
+Adding movie: Pulp Fiction
+Response: {"movieName":"Pulp Fiction"}
+------------------------------------
+Adding movie: Fight Club
+Response: {"movieName":"Fight Club"}
+------------------------------------
+```
 
 ### Get Movies
 Use the `get_movies.sh` script to list all the added movies.
 
 This script sends a GET request to the `/movies` endpoint.
+
+Example:
    ```bash
     ./scripts/get_movies.sh
    ```
+
+Output:
+```json
+[
+  {
+    "movieName": "The Godfather"
+  },
+  {
+    "movieName": "Schindler's List"
+  },
+  {
+    "movieName": "Pulp Fiction"
+  },
+  {
+    "movieName": "Fight Club"
+  }
+]
+```
 
 ### Add Theaters to Movies
 Use the `add_theaters.sh` script to associate theaters with movies.
 
 This script sends a POST request to the `/add_theaters_to_movie` endpoint for each movie.
+
+Example:
    ```bash
     ./scripts/add_theaters.sh
    ```
+
+Output:
+```bash
+Adding theaters to movie: Fight Club
+Response: Theaters added for a movie
+Adding theaters to movie: The Godfather
+Response: Theaters added for a movie
+Adding theaters to movie: Schindler List
+Response: Theaters added for a movie
+Adding theaters to movie: Pulp Fiction
+Response: Theaters added for a movie
+```
 
 ### Get Theaters for a Movie
 Use the `get_theaters.sh` script to list all theaters playing a particular movie.
@@ -109,6 +163,39 @@ This script sends a POST request to the `/movies/theaters` endpoint.
    ```bash
     ./scripts/get_theaters.sh
    ```
+
+Output:
+```bash
+Schindler's List
+[]
+The Godfather
+[
+  {
+    "theaterName": "The Vito Corleone Theater"
+  },
+  {
+    "theaterName": "The Family Cinema"
+  }
+]
+Pulp Fiction
+[
+  {
+    "theaterName": "The Reservoir Dogs Theater"
+  },
+  {
+    "theaterName": "The Fiction Lounge"
+  }
+]
+Fight Club
+[
+  {
+    "theaterName": "The Underground Theater"
+  },
+  {
+    "theaterName": "The Rebel Cinema"
+  }
+]
+```
 
 ### Show Available Seats
 To check available seats in a theater for a specific movie, use the `show_available_seats.sh` script.

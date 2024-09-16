@@ -65,7 +65,7 @@ docker:
 	docker build -t movie_booking_service .
 
 # Run the service
-run:
+run: all
 	./$(TARGET)
 
 .PHONY: all clean clean_conan docs docker run
