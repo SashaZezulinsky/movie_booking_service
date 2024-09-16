@@ -18,6 +18,11 @@ CXXFLAGS = -std=c++17 -Wall -DASIO_STANDALONE
 INCLUDE_DIRS = $(foreach includedir,$(CONAN_INCLUDE_DIRS),-I$(includedir))
 CXXFLAGS += $(INCLUDE_DIRS)
 
+# Linker settings for Windows
+ifeq ($(OS),Windows_NT)
+    LDFLAGS += -lws2_32
+endif
+
 # Source, object, and binary directories
 SRC_DIR = src
 OBJ_DIR = obj
