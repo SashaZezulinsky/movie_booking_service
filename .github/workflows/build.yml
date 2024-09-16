@@ -20,13 +20,8 @@ jobs:
           python -m pip install conan
       - name: Set up Conan profile
         run: conan profile detect
-      - name: Install build tools on Windows
-        if: runner.os == 'Windows'
-        run: |
-          choco install make
-          choco install mingw
-          refreshenv
       - name: Build the project
+        shell: bash
         run: make all
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
