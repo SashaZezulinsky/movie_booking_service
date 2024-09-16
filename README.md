@@ -31,7 +31,9 @@ Once built, you can run the service using:
    ```bash
     ./bin/movie_booking_service
    ```
+
     or
+
    ```bash
    make run
    ```
@@ -63,14 +65,14 @@ Use the get_theaters.sh script to list all theaters playing a particular movie. 
     ./scripts/get_theaters.sh
    ```
 
-5. Show Available Seats
+5. **Show Available Seats**
 To check available seats in a theater for a specific movie, use the show_available_seats.sh script.
    ```bash
     ./scripts/show_available_seats.sh "Fight Club" "The Rebel Cinema"
    ```
 
 *Example Response*:
-```json
+```bash
 Response for 'Fight Club' in 'The Rebel Cinema'
 [
   "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", "a10",
@@ -87,18 +89,20 @@ To book one or more seats for a movie in a particular theater, use the book_seat
 
 *Example Response*:
 
-```json
+```bash
 Response for 'Fight Club' in 'The Rebel Cinema': Seats booked successfully.
 ```
 
 7. **Check Available Seats Again**
 After booking, you can run the show_available_seats.sh script again to confirm the booking:
 
-
+```bash
 ./scripts/show_available_seats.sh "Fight Club" "The Rebel Cinema"
+```
+
 *Example Response*:
 
-```json
+```bash
 Response for 'Fight Club' in 'The Rebel Cinema'
 [
   "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", "a10",
@@ -112,18 +116,28 @@ Response for 'Fight Club' in 'The Rebel Cinema'
     docker build -t movie_booking_service:latest .
    ```
 
-** Run the Docker Container**
+**Run the Docker Container**
    ```bash
 docker run -p 8080:8080 movie_booking_service
    ```
 
-Testing with Bash Scripts
-The scripts/ folder contains multiple bash scripts to test the API endpoints. You can use these to interact with the movie booking service.
+*You can also run a docker container from an image stored on Docker Hub*
+   ```bash
+docker run -p 8080:8080 zezulinsky/movie_booking_service:latest
+   ```
+
+##Testing with Bash Scripts
+The ```scripts/``` folder contains multiple bash scripts to test the API endpoints. You can use these to interact with the movie booking service.
 
 ```add_movies.sh```: Adds movies to the service.
+
 ```get_movies.sh```: Lists added movies.
+
 ```add_theaters.sh```: Populates theaters for movies.
+
 ```get_theaters.sh```: Lists theaters showing a movie.
+
 ```show_available_seats.sh```: Shows available seats for a movie in a theater.
+
 ```book_seats.sh```: Books seats for a movie in a theater.
 
