@@ -39,7 +39,7 @@ To install the project dependencies using Conan, follow these steps:
 
 ### Command to build a service
    ```bash
-    make all
+    make build
    ```
 
 ## Running the Service

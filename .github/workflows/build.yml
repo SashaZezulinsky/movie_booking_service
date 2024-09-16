@@ -29,9 +29,12 @@ jobs:
           python -m pip install conan
       - name: Set up Conan profile
         run: conan profile detect
+      - name: Run tests
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: make test
       - name: Build the project
         shell: bash
-        run: make all
+        run: make build
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:

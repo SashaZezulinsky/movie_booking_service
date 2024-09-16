@@ -34,12 +34,14 @@ public:
      * @param movieName The name of the movie.
      * @param theaters A vector of shared pointers to Theater objects.
      */
-    void addTheatersToMovie(const std::string& movieName, const std::vector<std::shared_ptr<Theater>>& theaters) {
+    bool addTheatersToMovie(const std::string& movieName, const std::vector<std::shared_ptr<Theater>>& theaters) {
         std::lock_guard<std::mutex> lock(movies_mutex_); // Lock the mutex for thread safety
         auto it = movies_.find(movieName);
         if (it != movies_.end()) {
             it->second->addTheaters(theaters);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -85,6 +87,25 @@ public:
             }
         }
         return false; // Theater not found
+    }
+
+    /**
+     * @brief Retrieves a list of available seats for a given movie and theater.
+     * 
+     * @param movieName The name of the movie.
+     * @param theaterName The name of the theater.
+     * 
+     * @return A vector of available seat identifiers. Returns an empty vector if the movie or theater is not found.
+     */
+    std::vector<std::string> getAvailableSeats(const std::string& movieName, const std::string& theaterName) const {
+        auto theaters = getTheatersForMovie(movieName);
+        std::lock_guard<std::mutex> lock(movies_mutex_); // Lock the mutex for thread safety
+        for (const auto& theater : theaters) {
+            if (theater->getName() == theaterName) {
+                return theater->getAvailableSeats();
+            }
+        }
+        return {};
     }
 
 private:
