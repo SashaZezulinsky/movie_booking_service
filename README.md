@@ -330,7 +330,7 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 - **Response:**
 ```json
 [
-  "a1", "a2", "a3", ..., "a20"
+  "a1", "a2", "a3", "a20"
 ]
 ```
 
@@ -354,6 +354,6 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 - **Response:**
 ```json
 [
-  "a1", "a2", "a3", ..., "a9", "a12", "a13", ..., "a20"
+  "a1", "a2", "a3", "a9", "a12", "a13", "a20"
 ]
 ```
