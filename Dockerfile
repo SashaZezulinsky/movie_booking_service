@@ -23,7 +23,7 @@ RUN conan profile detect
 RUN conan install . --build=missing -of=conan_install
 
 # Build the project
-RUN make all
+RUN make build
 
 # Expose the service port
 EXPOSE 8080
