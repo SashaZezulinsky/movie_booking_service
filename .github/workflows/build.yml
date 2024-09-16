@@ -115,7 +115,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker image
         run: |
-          docker build -t movie_booking_service:latest -t movie_booking_service:${{ needs.create_release.outputs.tag }} .
+          docker build -t zezulinsky/movie_booking_service:latest -t zezulinsky/movie_booking_service:${{ needs.create_release.outputs.tag }} .
       - name: Push Docker image to GitHub Packages
         run: |
           docker push zezulinsky/movie_booking_service:latest
