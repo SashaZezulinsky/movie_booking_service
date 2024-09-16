@@ -22,6 +22,7 @@ CXXFLAGS += $(INCLUDE_DIRS)
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
+DOCS_DIR = docs
 TARGET = $(BIN_DIR)/movie_booking_service
 
 # List of source and object files
@@ -48,7 +49,7 @@ $(TARGET): $(OBJS)
 
 # Clean up all generated files
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR) $(CONAN_INSTALL_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR) $(CONAN_INSTALL_DIR) $(DOCS_DIR)
 
 # Generate documentation with Doxygen
 docs:
