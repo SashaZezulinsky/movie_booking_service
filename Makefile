@@ -20,7 +20,7 @@ CXXFLAGS += $(INCLUDE_DIRS)
 
 # Linker settings for Windows
 ifeq ($(OS),Windows_NT)
-    LDFLAGS += -lws2_32
+    LDFLAGS += -lws2_32 -lmswsock
 endif
 
 # Source, object, and binary directories
