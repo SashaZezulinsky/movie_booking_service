@@ -1,9 +1,12 @@
 # Set the directory for Conan's installation files
 CONAN_INSTALL_DIR = conan_install
 
+# Doxygen settings
+DOXYGEN_CONFIG = Doxyfile
+
 # Include Conan's generated make dependencies
 ifeq (,$(wildcard $(CONAN_INSTALL_DIR)/conandeps.mk))
-$(shell conan install . --build=missing -of=$(CONAN_INSTALL_DIR))
+    $(shell conan install . --build=missing -of=$(CONAN_INSTALL_DIR))
 endif
 include $(CONAN_INSTALL_DIR)/conandeps.mk
 
@@ -15,10 +18,16 @@ CXXFLAGS = -std=c++17 -Wall -DASIO_STANDALONE
 INCLUDE_DIRS = $(foreach includedir,$(CONAN_INCLUDE_DIRS),-I$(includedir))
 CXXFLAGS += $(INCLUDE_DIRS)
 
+# Linker settings for Windows
+ifeq ($(OS),Windows_NT)
+    LDFLAGS += -lws2_32 -lmswsock
+endif
+
 # Source, object, and binary directories
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
+DOCS_DIR = docs
 TARGET = $(BIN_DIR)/movie_booking_service
 
 # List of source and object files
@@ -33,7 +42,7 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 # Target to build the entire project
-all: $(OBJ_DIR) $(BIN_DIR) $(TARGET)
+all: clean $(OBJ_DIR) $(BIN_DIR) $(TARGET)
 
 # Compile individual source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
@@ -45,6 +54,18 @@ $(TARGET): $(OBJS)
 
 # Clean up all generated files
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR) $(CONAN_INSTALL_DIR) $(DOCS_DIR)
 
-.PHONY: all clean
+# Generate documentation with Doxygen
+docs:
+	doxygen $(DOXYGEN_CONFIG)
+
+# Build Docker image
+docker:
+	docker build -t movie_booking_service .
+
+# Run the service
+run:
+	./$(TARGET)
+
+.PHONY: all clean clean_conan docs docker run

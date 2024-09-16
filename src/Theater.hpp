@@ -1,89 +1,90 @@
-#ifndef THEATER_HPP
-#define THEATER_HPP
-
-#include <string>
 #include <vector>
+#include <string>
+#include <iostream>
 #include <mutex>
 
 /**
- * @brief Represents a Theater with a set of seats.
+ * @class Theater
+ * @brief Represents a theater with a set of seats.
  */
 class Theater {
 public:
     /**
-     * @brief Construct a new Theater object.
+     * @brief Constructor for Theater.
      * @param name The name of the theater.
      */
-    Theater(const std::string& name) : name_(name), seats_(20, true) {}
-
-    // Delete copy constructor and copy assignment operator
-    Theater(const Theater&) = delete;
-    Theater& operator=(const Theater&) = delete;
-
-    // Implement move constructor and move assignment operator
-    /**
-     * @brief Move constructor for Theater object.
-     * @param other The Theater to move.
-     */
-    Theater(Theater&& other) noexcept : name_(std::move(other.name_)), seats_(std::move(other.seats_)) {}
-
-    /**
-     * @brief Move assignment operator for Theater object.
-     * @param other The Theater to move.
-     * @return Theater& Reference to this Theater object.
-     */
-    Theater& operator=(Theater&& other) noexcept {
-        if (this != &other) {
-            std::lock_guard<std::mutex> lock(seat_mutex_);
-            name_ = std::move(other.name_);
-            seats_ = std::move(other.seats_);
-        }
-        return *this;
-    }
+    Theater(const std::string& name) : name_(name), seats_(20, true) {} // Initialize with 20 available seats
 
     /**
      * @brief Get the name of the theater.
-     * @return std::string Name of the theater.
+     * @return The name of the theater.
      */
-    std::string getName() const {
-        return name_;
-    }
+    std::string getName() const { return name_; }
 
     /**
-     * @brief Get a list of available seats.
-     * @return std::vector<std::string> List of available seat names.
+     * @brief Books one or more seats for the theater.
+     * 
+     * This function attempts to book the specified seats. It verifies that each seat 
+     * is in the correct format (e.g., "a1", "a2", ..., "a20") and checks that the 
+     * seat is available for booking. The function locks the seat mutex to ensure 
+     * thread safety during the booking process.
+     *
+     * @param seats A vector of strings representing the seat names to be booked.
+     *              Each seat name must be in the format of "aX", where X is a 
+     *              number from 1 to 20.
+     *
+     * @return true if all specified seats were successfully booked; false if any 
+     *         seat is invalid, already booked, or out of bounds.
+     */
+    bool bookSeats(const std::vector<std::string>& seats) {
+        std::lock_guard<std::mutex> lock(seat_mutex_); // Lock the mutex to prevent race conditions
+
+        for (const auto& seat : seats) {
+            // Ensure the seat name is in the correct format (e.g., "a1", "a2", ..., "a20")
+            if (seat.size() < 2 || seat[0] != 'a') {
+                return false; // Invalid seat name
+            }
+
+            // Convert the remaining characters to a number
+            size_t seatIndex = std::stoi(seat.substr(1)); // Convert the substring starting from index 1
+
+            // Validate the seat index (1 to 20)
+            if (seatIndex < 1 || seatIndex > 20) {
+                return false; // Seat index is out of bounds
+            }
+
+            // Convert to zero-based index for booking
+            seatIndex -= 1;
+
+            // Check if the seat is already booked
+            if (!seats_[seatIndex]) {
+                return false; // Seat is already booked
+            }
+
+            seats_[seatIndex] = false; // Book the seat
+        }
+        return true; // Successfully booked all seats
+}
+
+    /**
+     * @brief Get a list of available seats in the theater.
+     * @return A vector of available seat identifiers.
      */
     std::vector<std::string> getAvailableSeats() const {
+        std::lock_guard<std::mutex> lock(seat_mutex_); // Lock the mutex for thread safety
         std::vector<std::string> availableSeats;
         for (size_t i = 0; i < seats_.size(); ++i) {
             if (seats_[i]) {
-                availableSeats.push_back("A" + std::to_string(i + 1));
+                // Create a seat identifier (e.g., "a1", "a2", etc.)
+                char row = 'a'; // Assume all seats are in row 'a'
+                availableSeats.push_back(std::string(1, row) + std::to_string(i + 1));
             }
         }
         return availableSeats;
     }
 
-    /**
-     * @brief Book a set of seats.
-     * @param seatNumbers The seats to book.
-     * @return true if booking was successful, false otherwise.
-     */
-    bool bookSeats(const std::vector<std::string>& seatNumbers) {
-        std::lock_guard<std::mutex> lock(seat_mutex_);
-        for (const auto& seat : seatNumbers) {
-            int seatIndex = std::stoi(seat.substr(1)) - 1;
-            if (seatIndex < 0 || static_cast<size_t>(seatIndex) >= seats_.size() || !seats_[seatIndex]) {
-                return false; // Seat is already booked or invalid
-            }
-            seats_[seatIndex] = false; // Mark seat as booked
-        }
-        return true;
-    }
-
 private:
-    std::string name_;                ///< Name of the theater.
-    std::vector<bool> seats_;         ///< Vector representing available seats.
-    mutable std::mutex seat_mutex_;   ///< Mutex to protect seat booking operations.
+    std::string name_;                ///< The name of the theater
+    std::vector<bool> seats_;         ///< Vector to represent seat availability
+    mutable std::mutex seat_mutex_;   ///< Mutex for thread safety on seat operations
 };
-
-#endif // THEATER_HPP
