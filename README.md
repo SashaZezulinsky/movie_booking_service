@@ -254,8 +254,7 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 
 ## Available Endpoints
 ### 1. Add a Movie
-- **Endpoint:** `/add_movie`
-- **Method:** `POST`
+- **Endpoint:** `POST /add_movie`
 - **Request:**
 ```json
 { "movieName": "The Matrix" }
@@ -266,9 +265,7 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 ```
 
 ### 2. List All Movies
-- **Endpoint**: `/movies`
-- **Method:** `GET`
-- **Description**: Retrieves a list of all movies available in the system.
+- **Endpoint**: `GET /movies`
 - **Response**:
   ```json
   [
@@ -278,9 +275,7 @@ Response for 'Fight Club' in 'The Rebel Cinema'
   ```
 
 ### 3. Add Theaters to a Movie
-- **Endpoint**: `/add_theaters_to_movie`
-- **Method:** `POST`
-- **Description**: Adds one or more theaters to a specified movie.
+- **Endpoint**: `POST /add_theaters_to_movie`
 - **Request body**: 
   ```json
   {
@@ -308,9 +303,6 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 
 ### 4. List Theaters Showing a Movie
 - **Endpoint:** `POST /movies/theaters`
-- **Method:** `POST`
-- **Description:**
-Fetches a list of theaters showing the specified movie. If the movie exists in the system and is being shown in any theaters, the response will return a JSON array of theater names. If the movie is not found or no theaters are showing the movie, an error message is returned.
 - **Request body:**
 ```json
 {
@@ -329,3 +321,39 @@ Fetches a list of theaters showing the specified movie. If the movie exists in t
 ]
 ```
 
+### 5. View Available Seats
+- **Endpoint:** `POST /movies/seats`
+- **Request body:**
+```json
+{ "movieName": "The Matrix", "theaterName": "IMAX" }
+```
+- **Response:**
+```json
+[
+  "a1", "a2", "a3", ..., "a20"
+]
+```
+
+### 6. Book Seats for a Movie
+- **Endpoint:** `POST /movies/book_seats`
+- **Request body:**
+```json
+{ "movieName": "The Matrix", "theaterName": "IMAX", "seats": ["a10", "a11"] }
+```
+- **Response:**
+```json
+{ "message": "Seats booked successfully." }
+```
+
+### 7. View Available Seats After Booking
+- **Endpoint:** `POST /movies/seats`
+- **Request body:**
+```json
+{ "movieName": "The Matrix", "theaterName": "IMAX" }
+```
+- **Response:**
+```json
+[
+  "a1", "a2", "a3", ..., "a9", "a12", "a13", ..., "a20"
+]
+```
