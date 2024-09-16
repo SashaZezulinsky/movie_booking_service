@@ -77,10 +77,13 @@ jobs:
         include:
           - os: windows-latest
             path: bin/movie_booking_service.exe
+            name: movie_booking_service_windows
           - os: ubuntu-latest
             path: bin/movie_booking_service
+            name: movie_booking_service_linux
           - os: macos-latest
             path: bin/movie_booking_service
+            name: movie_booking_service_darwin
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
@@ -92,8 +95,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.create_release.outputs.url }}
-          asset_path: movie_booking_service_${{ matrix.os}}/${{ matrix.path }}
-          asset_name: movie_booking_service_${{ matrix.os }}
+          asset_path: ${{ matrix.path }}
+          asset_name: ${{ matrix.name }}
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
