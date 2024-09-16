@@ -76,13 +76,13 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: windows-latest
-            path: bin/movie_booking_service.exe
+            path: movie_booking_service.exe
             name: movie_booking_service_windows
           - os: ubuntu-latest
-            path: bin/movie_booking_service
+            path: movie_booking_service
             name: movie_booking_service_linux
           - os: macos-latest
-            path: bin/movie_booking_service
+            path: movie_booking_service
             name: movie_booking_service_darwin
     steps:
       - name: Download artifact
