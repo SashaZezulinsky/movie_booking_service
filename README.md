@@ -53,7 +53,32 @@ make run
 
 The service will start and listen on port 8080.
 
-## API Endpoints
+## Running with Docker
+**Build the Docker Image**
+   ```bash
+   docker build -t movie_booking_service:latest .
+   ```
+**Run the Docker Container**
+   ```bash
+   docker run -p 8080:8080 movie_booking_service
+   ```
+
+**Run the Docker Container from the Hub**
+   ```bash
+   docker run -p 8080:8080 zezulinsky/movie_booking_service:latest
+   ```
+## Testing with Bash Scripts
+The `scripts/` folder contains multiple bash scripts to test the API endpoints.
+
+You can use these to interact with the movie booking service.
+* `add_movies.sh`: Adds movies to the service.
+* `get_movies.sh`: Lists added movies.
+* `add_theaters.sh`: Populates theaters for movies.
+* `get_theaters.sh`: Lists theaters showing a movie.
+* `show_available_seats.sh`: Shows available seats for a movie in a theater.
+* `book_seats.sh`: Books seats for a movie in a theater.
+
+## Testing API Endpoints
 ### Add Movies
 Use the `add_movies.sh` script to add movies to the service.
 
@@ -131,35 +156,3 @@ Response for 'Fight Club' in 'The Rebel Cinema'
   "a11", "a12", "a13", "a14", "a15", "a16", "a19", "a20"
 ]
 ```
-
-## Running with Docker
-**Build the Docker Image**
-   ```bash
-   docker build -t movie_booking_service:latest .
-   ```
-**Run the Docker Container**
-   ```bash
-   docker run -p 8080:8080 movie_booking_service
-   ```
-
-**Run the Docker Container from the Hub**
-   ```bash
-   docker run -p 8080:8080 zezulinsky/movie_booking_service:latest
-   ```
-
-## Testing with Bash Scripts
-The `scripts/` folder contains multiple bash scripts to test the API endpoints.
-
-You can use these to interact with the movie booking servicie.
-
-`add_movies.sh`: Adds movies to the service.
-
-`get_movies.sh`: Lists added movies.
-
-`add_theaters.sh`: Populates theaters for movies.
-
-`get_theaters.sh`: Lists theaters showing a movie.
-
-`show_available_seats.sh`: Shows available seats for a movie in a theater.
-
-`book_seats.sh`: Books seats for a movie in a theater.
