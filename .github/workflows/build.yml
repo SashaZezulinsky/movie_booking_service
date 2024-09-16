@@ -44,7 +44,8 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/master'
     outputs:
-      url: ${{ steps.version.outputs.upload_url }}
+      url: ${{ steps.create_release.outputs.upload_url }}
+      tag: ${{ steps.version.outputs.new_tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -60,7 +61,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          name: Movie booking service ${{ steps.version.outputs.new_tag }}
+          name: "Movie Booking Service ${{ steps.version.outputs.new_tag }}"
           tag_name: ${{ steps.version.outputs.new_tag }}
           body: "Automated release of version ${{ steps.version.outputs.new_tag }}"
         env:
@@ -109,7 +110,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker image
         run: |
-          docker build -t movie_booking_service:latest -t movie_booking_service:${{ needs.create_release.outputs.new_tag }} .
+          docker build -t movie_booking_service:latest -t movie_booking_service:${{ needs.create_release.outputs.tag }} .
       - name: Push Docker image to GitHub Packages
         run: |
-          docker push zezulinsky/movie_booking_service:latest zezulinsky/movie_booking_service:${{ needs.create_release.outputs.new_tag }}
+          docker push zezulinsky/movie_booking_service:latest zezulinsky/movie_booking_service:${{ needs.create_release.outputs.tag }}
