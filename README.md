@@ -82,17 +82,17 @@ You can use these to interact with the movie booking service.
 * `book_seats.sh`: Books seats for a movie in a theater.
 
 ## How can I test a service?
-#### Add Movies
+### Add Movies
 Use the `add_movies.sh` script to add movies to the service.
 
 This script sends a POST request to the `/add_movie` endpoint to add multiple movies.
 
-Example:
+#### Example
    ```bash
     ./scripts/add_movies.sh
    ```
 
-Output:
+#### Output
 ```bash
 Adding movie: The Godfather
 Response: {"movieName":"The Godfather"}
@@ -108,17 +108,17 @@ Response: {"movieName":"Fight Club"}
 ------------------------------------
 ```
 
-#### Get Movies
+### Get Movies
 Use the `get_movies.sh` script to list all the added movies.
 
 This script sends a GET request to the `/movies` endpoint.
 
-Example:
+#### Example
    ```bash
     ./scripts/get_movies.sh
    ```
 
-Output:
+#### Output
 ```json
 [
   {
@@ -136,17 +136,17 @@ Output:
 ]
 ```
 
-#### Add Theaters to Movies
+### Add Theaters to Movies
 Use the `add_theaters.sh` script to associate theaters with movies.
 
 This script sends a POST request to the `/add_theaters_to_movie` endpoint for each movie.
 
-Example:
+#### Example
    ```bash
     ./scripts/add_theaters.sh
    ```
 
-Output:
+#### Output
 ```bash
 Adding theaters to movie: Fight Club
 Response: Theaters added for a movie
@@ -158,15 +158,17 @@ Adding theaters to movie: Pulp Fiction
 Response: Theaters added for a movie
 ```
 
-#### Get Theaters for a Movie
+### Get Theaters for a Movie
 Use the `get_theaters.sh` script to list all theaters playing a particular movie.
 
 This script sends a POST request to the `/movies/theaters` endpoint.
+
+#### Example
    ```bash
     ./scripts/get_theaters.sh
    ```
 
-Output:
+#### Output
 ```bash
 Schindler's List
 []
@@ -199,15 +201,17 @@ Fight Club
 ]
 ```
 
-#### Show Available Seats
+### Show Available Seats
 To check available seats in a theater for a specific movie, use the `show_available_seats.sh` script.
 
 It interacts with the `/movies/seats` endpoint
+   
+#### Example
    ```bash
     ./scripts/show_available_seats.sh "Fight Club" "The Rebel Cinema"
    ```
 
-Output:
+#### Output
 ```bash
 Response for 'Fight Club' in 'The Rebel Cinema'
 [
@@ -216,27 +220,30 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 ]
 ```
 
-#### Book Seats
+### Book Seats
 To book one or more seats for a movie in a particular theater, use the `book_seats.sh` script.
 
 The script sends a POST request to the `/movies/book_seats` endpoint.
+   
+#### Example
    ```bash
    ./scripts/book_seats.sh "Fight Club" "The Rebel Cinema" "a17" "a18"
    ```
 
-Output:
+#### Output
 ```bash
 Response for 'Fight Club' in 'The Rebel Cinema': Seats booked successfully.
 ```
 
-#### Check Available Seats Again
+### Check Available Seats Again
 After booking, you can run the `show_available_seats.sh` script again to confirm the booking:
 
+#### Example
 ```bash
 ./scripts/show_available_seats.sh "Fight Club" "The Rebel Cinema"
 ```
 
-Output:
+#### Output
 ```bash
 Response for 'Fight Club' in 'The Rebel Cinema'
 [
