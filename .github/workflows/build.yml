@@ -30,7 +30,7 @@ jobs:
       - name: Set up Conan profile
         run: conan profile detect
       - name: Run tests
-        if: matrix.os != "windows-latest"
+        if: ${{ matrix.os }} != "windows-latest"
         run: make test
       - name: Build the project
         shell: bash
