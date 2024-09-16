@@ -28,14 +28,14 @@ The **Movie Booking Service** is a REST API designed to handle movie booking ope
 
 To install the project dependencies using Conan, follow these steps:
 
-### Install Conan
+#### Install Conan
    ```bash
    python3 -m pip install --upgrade pip
    python3 -m pip install conan
    conan profile detect
    ```
 
-### Build the Project
+#### Build the Project
    ```bash
     make all
    ```
