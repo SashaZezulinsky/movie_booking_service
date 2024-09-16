@@ -86,11 +86,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: movie_booking_service_${{ matrix.os }}
+      - name: List folders
+        run: ls -al
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.create_release.outputs.url }}
-          asset_path: ${{ matrix.path }}
+          asset_path: movie_booking_service_${{ matrix.os}}/${{ matrix.path }}
           asset_name: movie_booking_service_${{ matrix.os }}
           asset_content_type: application/octet-stream
         env:
