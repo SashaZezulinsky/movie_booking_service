@@ -19,9 +19,13 @@ CXXFLAGS += $(INCLUDE_DIRS)
 LIB_DIRS = $(foreach libdir,$(CONAN_LIB_DIRS),-L$(libdir))
 LDFLAGS += $(LIB_DIRS)
 
-# Linker settings for Windows (for Winsock)
+# Linker settings for Windows (for Winsock and Google Test)
 ifeq ($(OS),Windows_NT)
-    LDFLAGS += -lws2_32 -lmswsock
+    LDFLAGS += -lws2_32 -lmswsock -lgtest -lgtest_main
+    INCLUDE_DIRS += -IC:/Users/runneradmin/.conan2/p/b/gtest50c700540ab27/p/include
+    LIB_DIRS += -LC:/Users/runneradmin/.conan2/p/b/gtest50c700540ab27/p/lib
+else
+    GTEST_LIBS = -lgtest -lgtest_main -lpthread
 endif
 
 # Source, object, and binary directories
@@ -42,9 +46,6 @@ OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 # Test source files
 TEST_SRCS = $(wildcard $(TEST_DIR)/*.cpp)
 TEST_OBJS = $(TEST_SRCS:$(TEST_DIR)/%.cpp=$(TEST_OBJ_DIR)/%.o)
-
-# Google Test libraries (Conan should handle these)
-GTEST_LIBS = -lgtest -lgtest_main -lpthread
 
 # Create output directories if they do not exist
 $(OBJ_DIR):
