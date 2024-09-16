@@ -28,13 +28,14 @@ The **Movie Booking Service** is a REST API designed to handle movie booking ope
 
 To install the project dependencies using Conan, follow these steps:
 
-1. **Install Conan**:
+### Install Conan
    ```bash
    python3 -m pip install --upgrade pip
    python3 -m pip install conan
    conan profile detect
    ```
-2. **Build the Project**
+
+### Build the Project
    ```bash
     make all
    ```
@@ -53,7 +54,7 @@ make run
 The service will start and listen on port 8080.
 
 ## API Endpoints
-**Add Movies**
+### Add Movies
 Use the `add_movies.sh` script to add movies to the service.
 
 This script sends a POST request to the `/add_movie` endpoint to add multiple movies.
@@ -61,7 +62,7 @@ This script sends a POST request to the `/add_movie` endpoint to add multiple mo
     ./scripts/add_movies.sh
    ```
 
-**Get Movies**
+### Get Movies
 Use the `get_movies.sh` script to list all the added movies.
 
 This script sends a GET request to the `/movies` endpoint.
@@ -69,7 +70,7 @@ This script sends a GET request to the `/movies` endpoint.
     ./scripts/get_movies.sh
    ```
 
-**Add Theaters to Movies**
+### Add Theaters to Movies
 Use the `add_theaters.sh` script to associate theaters with movies.
 
 This script sends a POST request to the `/add_theaters_to_movie` endpoint for each movie.
@@ -77,7 +78,7 @@ This script sends a POST request to the `/add_theaters_to_movie` endpoint for ea
     ./scripts/add_theaters.sh
    ```
 
-**Get Theaters for a Movie**
+### Get Theaters for a Movie
 Use the `get_theaters.sh` script to list all theaters playing a particular movie.
 
 This script sends a POST request to the `/movies/theaters` endpoint.
@@ -85,7 +86,7 @@ This script sends a POST request to the `/movies/theaters` endpoint.
     ./scripts/get_theaters.sh
    ```
 
-**Show Available Seats**
+### Show Available Seats
 To check available seats in a theater for a specific movie, use the `show_available_seats.sh` script.
 
 It interacts with the `/movies/seats` endpoint
@@ -102,7 +103,7 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 ]
 ```
 
-**Book Seats**
+### Book Seats
 To book one or more seats for a movie in a particular theater, use the `book_seats.sh` script.
 
 The script sends a POST request to the `/movies/book_seats` endpoint.
@@ -115,7 +116,7 @@ Example Response:
 Response for 'Fight Club' in 'The Rebel Cinema': Seats booked successfully.
 ```
 
-**Check Available Seats Again**
+### Check Available Seats Again
 After booking, you can run the `show_available_seats.sh` script again to confirm the booking:
 
 ```bash
@@ -151,14 +152,9 @@ The `scripts/` folder contains multiple bash scripts to test the API endpoints.
 
 You can use these to interact with the movie booking servicie.
 
--`add_movies.sh`: Adds movies to the service.
-
+*`add_movies.sh`: Adds movies to the service.
 *`get_movies.sh`: Lists added movies.
-
-+`add_theaters.sh`: Populates theaters for movies.
-
--`get_theaters.sh`: Lists theaters showing a movie.
-
+*`add_theaters.sh`: Populates theaters for movies.
+*`get_theaters.sh`: Lists theaters showing a movie.
 *`show_available_seats.sh`: Shows available seats for a movie in a theater.
-
-+`book_seats.sh`: Books seats for a movie in a theater.
+*`book_seats.sh`: Books seats for a movie in a theater.
