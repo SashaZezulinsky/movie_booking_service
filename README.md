@@ -28,7 +28,7 @@ The **Movie Booking Service** is a REST API designed to handle movie booking ope
 
 To install the project dependencies using Conan, follow these steps:
 
-#### Install Conan
+### Install Conan
    ```bash
    python3 -m pip install --upgrade pip
    python3 -m pip install conan
@@ -37,19 +37,19 @@ To install the project dependencies using Conan, follow these steps:
 
 ## Building the Project
 
-#### Command to build a service
+### Command to build a service
    ```bash
     make all
    ```
 
 ## Running the Service
 
-#### Running binary
+### Run using binary
 ```bash
 ./bin/movie_booking_service
 ```
 
-#### Running Makefile
+### Run using Makefile
 ```
 make run
 ```
@@ -81,7 +81,7 @@ You can use these to interact with the movie booking service.
 * `show_available_seats.sh`: Shows available seats for a movie in a theater.
 * `book_seats.sh`: Books seats for a movie in a theater.
 
-## Testing API Endpoints
+## How can I test a service?
 #### Add Movies
 Use the `add_movies.sh` script to add movies to the service.
 
