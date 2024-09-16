@@ -7,10 +7,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        path:
-          windows-latest: bin/movie_booking_service.exe
-          ubuntu-latest: bin/movie_booking_service
-          macos-latest: bin/movie_booking_service
+        include:
+          - os: windows-latest
+            path: bin/movie_booking_service.exe
+          - os: ubuntu-latest
+            path: bin/movie_booking_service
+          - os: macos-latest
+            path: bin/movie_booking_service
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
