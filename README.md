@@ -121,23 +121,16 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 docker run -p 8080:8080 movie_booking_service
    ```
 
-*You can also run a docker container from an image stored on Docker Hub*
+*Running a docker container from Docker Hub*
    ```bash
 docker run -p 8080:8080 zezulinsky/movie_booking_service:latest
    ```
 
-##Testing with Bash Scripts
+## Testing with Bash Scripts
 The ```scripts/``` folder contains multiple bash scripts to test the API endpoints. You can use these to interact with the movie booking service.
-
-```add_movies.sh```: Adds movies to the service.
-
-```get_movies.sh```: Lists added movies.
-
-```add_theaters.sh```: Populates theaters for movies.
-
-```get_theaters.sh```: Lists theaters showing a movie.
-
-```show_available_seats.sh```: Shows available seats for a movie in a theater.
-
-```book_seats.sh```: Books seats for a movie in a theater.
-
++```add_movies.sh```: Adds movies to the service.
++```get_movies.sh```: Lists added movies.
++```add_theaters.sh```: Populates theaters for movies.
++```get_theaters.sh```: Lists theaters showing a movie.
++```show_available_seats.sh```: Shows available seats for a movie in a theater.
++```book_seats.sh```: Books seats for a movie in a theater.
