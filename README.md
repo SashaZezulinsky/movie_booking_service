@@ -152,9 +152,14 @@ The `scripts/` folder contains multiple bash scripts to test the API endpoints.
 
 You can use these to interact with the movie booking servicie.
 
-*`add_movies.sh`: Adds movies to the service.
-*`get_movies.sh`: Lists added movies.
-*`add_theaters.sh`: Populates theaters for movies.
-*`get_theaters.sh`: Lists theaters showing a movie.
-*`show_available_seats.sh`: Shows available seats for a movie in a theater.
-*`book_seats.sh`: Books seats for a movie in a theater.
+`add_movies.sh`: Adds movies to the service.
+
+`get_movies.sh`: Lists added movies.
+
+`add_theaters.sh`: Populates theaters for movies.
+
+`get_theaters.sh`: Lists theaters showing a movie.
+
+`show_available_seats.sh`: Shows available seats for a movie in a theater.
+
+`book_seats.sh`: Books seats for a movie in a theater.
