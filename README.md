@@ -24,7 +24,7 @@ The **Movie Booking Service** is a REST API designed to handle movie booking ope
 - `scripts/` - Contains bash scripts for testing the endpoints by simulating various operations such as adding movies, booking seats, etc.
 - `conanfile.txt` - Conan file for managing external dependencies like Crow.
 
-## Install Project Dependencies using Conan
+## Install Dependencies
 
 To install the project dependencies using Conan, follow these steps:
 
@@ -35,7 +35,9 @@ To install the project dependencies using Conan, follow these steps:
    conan profile detect
    ```
 
-#### Build the Project
+## Building the Project
+
+#### Command to build a service
    ```bash
     make all
    ```
@@ -47,7 +49,7 @@ To install the project dependencies using Conan, follow these steps:
 ./bin/movie_booking_service
 ```
 
-#### Running with Makefile
+#### Running Makefile
 ```
 make run
 ```
@@ -55,15 +57,15 @@ make run
 The service will start and listen on port 8080.
 
 ## Running with Docker
-**Build the Docker Image**
+#### Build the Docker Image
    ```bash
    docker build -t movie_booking_service:latest .
    ```
-**Run the Docker Container**
+#### Run the Docker Container
    ```bash
    docker run -p 8080:8080 movie_booking_service
    ```
-**Run the Docker Container from the Hub**
+#### Run the Docker Container from the Hub
    ```bash
    docker run -p 8080:8080 zezulinsky/movie_booking_service:latest
    ```
