@@ -44,12 +44,12 @@ To install the project dependencies using Conan, follow these steps:
 
 ## Running the Service
 
-### Run using binary
+### Run binary
 ```bash
 ./bin/movie_booking_service
 ```
 
-### Run using Makefile
+### Run Makefile
 ```
 make run
 ```
@@ -57,15 +57,15 @@ make run
 The service will start and listen on port 8080.
 
 ## Running with Docker
-#### Build the Docker Image
+### Build the image
    ```bash
    docker build -t movie_booking_service:latest .
    ```
-#### Run the Docker Container
+### Run the container
    ```bash
    docker run -p 8080:8080 movie_booking_service
    ```
-#### Run the Docker Container from the Hub
+### Run the container from the Docker Hub
    ```bash
    docker run -p 8080:8080 zezulinsky/movie_booking_service:latest
    ```
@@ -251,3 +251,57 @@ Response for 'Fight Club' in 'The Rebel Cinema'
   "a11", "a12", "a13", "a14", "a15", "a16", "a19", "a20"
 ]
 ```
+
+## Available Endpoints
+### 1. Add a Movie
+- **Endpoint:** `/add_movie`
+- **Method:** `POST`
+- **Request:**
+  ```json
+  { "movieName": "The Matrix" }
+  ```
+- **Response:**
+  ```json
+  { "movieName": "The Matrix" }
+  ```
+### 2. List All Movies
+- **Endpoint**: `/movies`
+- **Method**: GET
+- **Description**: Retrieves a list of all movies available in the system.
+- **Response**:
+  ```json
+  [
+    { "movieName": "The Matrix" },
+    { "movieName": "Inception" }
+  ]
+  ```
+
+### 3. Add Theaters to a Movie
+**Endpoint**: `/add_theaters_to_movie`
+**Method**: POST
+**Description**: Adds one or more theaters to a specified movie.
+**Request body**: 
+  ```json
+  {
+    "movieName": "The Matrix",
+    "theaters": ["Theater 1", "Theater 2", "Theater 3"]
+  }
+  ```
+**Response**:
+  ```json
+  {
+    "movieName": "The Matrix",
+    "theaters": [
+      {
+        "theaterName": "Theater 1"
+      },
+      {
+        "theaterName": "Theater 2"
+      },
+      {
+        "theaterName": "Theater 3"
+      }
+    ]
+  }
+  ```
+
