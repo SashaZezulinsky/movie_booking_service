@@ -257,16 +257,17 @@ Response for 'Fight Club' in 'The Rebel Cinema'
 - **Endpoint:** `/add_movie`
 - **Method:** `POST`
 - **Request:**
-  ```json
-  { "movieName": "The Matrix" }
-  ```
+```json
+{ "movieName": "The Matrix" }
+```
 - **Response:**
-  ```json
-  { "movieName": "The Matrix" }
-  ```
+```json
+{ "movieName": "The Matrix" }
+```
+
 ### 2. List All Movies
 - **Endpoint**: `/movies`
-- **Method**: GET
+- **Method:** `GET`
 - **Description**: Retrieves a list of all movies available in the system.
 - **Response**:
   ```json
@@ -277,17 +278,17 @@ Response for 'Fight Club' in 'The Rebel Cinema'
   ```
 
 ### 3. Add Theaters to a Movie
-**Endpoint**: `/add_theaters_to_movie`
-**Method**: POST
-**Description**: Adds one or more theaters to a specified movie.
-**Request body**: 
+- **Endpoint**: `/add_theaters_to_movie`
+- **Method:** `POST`
+- **Description**: Adds one or more theaters to a specified movie.
+- **Request body**: 
   ```json
   {
     "movieName": "The Matrix",
     "theaters": ["Theater 1", "Theater 2", "Theater 3"]
   }
   ```
-**Response**:
+- **Response**:
   ```json
   {
     "movieName": "The Matrix",
@@ -304,4 +305,27 @@ Response for 'Fight Club' in 'The Rebel Cinema'
     ]
   }
   ```
+
+### 4. List Theaters Showing a Movie
+- **Endpoint:** `POST /movies/theaters`
+- **Method:** `POST`
+- **Description:**
+Fetches a list of theaters showing the specified movie. If the movie exists in the system and is being shown in any theaters, the response will return a JSON array of theater names. If the movie is not found or no theaters are showing the movie, an error message is returned.
+- **Request body:**
+```json
+{
+  "movieName": "The Matrix"
+}
+```
+- **Response:**
+```json
+[
+  {
+    "theaterName": "Theater A"
+  },
+  {
+    "theaterName": "Theater B"
+  }
+]
+```
 
