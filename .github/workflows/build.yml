@@ -118,4 +118,5 @@ jobs:
           docker build -t movie_booking_service:latest -t movie_booking_service:${{ needs.create_release.outputs.tag }} .
       - name: Push Docker image to GitHub Packages
         run: |
-          docker push zezulinsky/movie_booking_service:latest zezulinsky/movie_booking_service:${{ needs.create_release.outputs.tag }}
+          docker push zezulinsky/movie_booking_service:latest
+          docker push zezulinsky/movie_booking_service:${{ needs.create_release.outputs.tag }}
